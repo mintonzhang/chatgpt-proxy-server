@@ -45,4 +45,16 @@ public class ChatGPTService {
                 .map(w -> w.replaceFirst("\n", ""))
                 .orElse(null);
     }
+
+    public static ResponseEntity<JSONObject> getMessage(JSONObject jsonObject, String apiKey) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpMethod method = HttpMethod.POST;
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setBearerAuth(apiKey);
+
+
+        HttpEntity<JSONObject> httpEntity = new HttpEntity<>(jsonObject, httpHeaders);
+        return restTemplate.exchange(OPENAI_CHAT, method, httpEntity, JSONObject.class);
+
+    }
 }
